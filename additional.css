@@ -1,0 +1,77 @@
+/* Remove the original Copy Right message */
+footer .copySection p:nth-child(2) {
+    display:none !important;
+}
+
+/* Dislay the logo image as the original size*/
+/* Reference: https://easytouse.jp/2017/11/10/lightning/ */
+.navbar-brand img {
+    max-height: none !important;
+}
+
+/* Display the logo image above the global menu */
+/* Reference: https://www.nishi2002.com/23373.html */
+@media (min-width: 992px) {
+    .navbar-header {
+        height: 80px;
+    }
+    ul.gMenu {
+        clear: both;
+        float: none;
+		white-space:nowrap /* This is set to disable text wrapping */
+    }
+ 	ul.gMenu li {
+		width: 11%; /* this value needs to be adjusted based on a number of our global menu items */
+		padding: 0.5px;
+		font-size:95%
+    }
+}
+/* Change the background color of our global menu */
+ul.gMenu a{
+    background:#337ab7;
+    color:#ffffff;
+	font-size:100%;
+}
+/* Change the background color of our global menu while a mouse cursor is hovering */
+ul.gMenu a:hover{
+    color: #ff0000;
+}
+
+/* Custormized CSS for the mobile top page */
+
+/* CSS for the mobile menu buttons */
+.mobile-btn {
+	background:#337ab7;
+	padding:10px;
+	text-align:center;
+	border: double 1px #f5f5f5;
+}
+.mobile-btn a{
+	color:#ffffff;
+	font-size: 90%;
+	/*font-weight:bold;*/
+}
+.mobile-container{
+	margin: 0 -15px 5px -15px;
+}
+
+/* CSS for the Humburger meny icon */
+.vk-mobile-nav-menu-btn{
+    background:url(http://35.184.93.181/wp-content/uploads/2019/04/Menu-Icon2.svg) center 50% no-repeat;
+    background-size:30px 30px;
+    -webkit-transition:border-color .5s ease-out;
+    transition:border-color .5s ease-out;
+    background-color:#337ab7;
+}
+.vk-mobile-nav-menu-btn.menu-open{
+    background:url(http://35.184.93.181/wp-content/uploads/2019/04/Menu-Icon-Close-1.svg) center 50% no-repeat
+}
+/* Media Query not to display the mobile menu buttons when the site is browsed by PC */
+@media (min-width:992px){
+    .mobile-display{display:none}
+}
+/* Media Query not to display the greeting message when the site is browsed by mobile */
+@media screen and (max-width:782px){
+    .greeting-message{display:none}
+}
+/* */
