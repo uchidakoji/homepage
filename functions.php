@@ -73,62 +73,18 @@ function add_wp_footer_custom(){ ?>
 <!-- footerに書きたいコード -->
 <?php }
 // add_action( 'wp_footer', 'add_wp_footer_custom', 1 );
-// 
-add_filter('protected_title_format', 'remove_protected');
-  function remove_protected($title) {
-    return '%s';
-}
 
-// ここから関数を追加した
-// PC または　タブレット・モバイルのみで表示するコンテンツを指定するショートコードを作成する関数
-function pccontent( $atts, $content = null ) {
-    if(wp_is_mobile()) {
-        return '';
-    } else {
-        $content = do_shortcode( shortcode_unautop( $content ) );
-        return '' . $content . '';
-    }
-}
-function spcontent( $atts, $content = null ) {
-    if(wp_is_mobile()) {
-        $content = do_shortcode( shortcode_unautop( $content ) );
-        return '' . $content . '';
-    } else {
-        return '';
-    }
-}
-add_shortcode('pc-site', 'pccontent');
-add_shortcode('sp-site', 'spcontent');
-
-// スマートフォンを判別 */
-function is_mobile(){
-    $useragents = array(
-        'iPhone', // iPhone
-        'iPod', // iPod touch
-        'Android.*Mobile', // 1.5+ Android *** Only mobile
-        'Windows.*Phone', // *** Windows Phone
-        'dream', // Pre 1.5 Android
-        'CUPCAKE', // 1.5+ Android
-        'blackberry9500', // Storm
-        'blackberry9530', // Storm
-        'blackberry9520', // Storm v2
-        'blackberry9550', // Storm v2
-        'blackberry9800', // Torch
-        'webOS', // Palm Pre Experimental
-        'incognito', // Other iPhone browser
-        'webmate' // Other iPhone browser
-    );
-    $pattern = '/'.implode('|', $useragents).'/i';
-    return preg_match($pattern, $_SERVER['HTTP_USER_AGENT']);
-}
+// ******************************
+// ******************************
+// ******************************
+// ここから邦友会HP用の関数を追加した
 // 固定ページの本文のみを挿入するショートコードを作成する関数
 function shortcode_insert($atts){
     extract(shortcode_atts(array('id'=>0),$atts));
     if(get_post($id)!=null)return wpautop(do_shortcode(get_post($id)->post_content));
 }
 add_shortcode('insert','shortcode_insert');
-
-// SVGをイメージファイルに追加することを許可する
+// SVGをイメージファイルに追加することを許可する関数
 function add_file_types_to_uploads($file_types){
     $new_filetypes = array();
     $new_filetypes['svg'] = 'image/svg+xml';
@@ -136,3 +92,13 @@ function add_file_types_to_uploads($file_types){
     return $file_types;
 }
 add_action('upload_mimes', 'add_file_types_to_uploads');
+/* 寄稿者がメディアを追加を利用できるようにする, 寄稿者が固定ページを投稿できるようにする関数
+*/
+function edit_contributor_role(){
+  $role = get_role( 'contributor' );
+  $role->add_cap('upload_files');
+  $role->add_cap('edit_pages');
+  $role->add_cap('delete_pages');
+  $role->remove_cap('edit_published_pages');
+}
+add_action( 'admin_init', 'edit_contributor_role' );
